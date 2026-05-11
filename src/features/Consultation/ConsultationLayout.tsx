@@ -81,6 +81,7 @@ const ConsultationLayout: React.FC<Props> = ({ className }) => {
                 defaultValues={consultData.consultation}
                 className="flex-1"
                 patientName={`${consultData.patient?.lastName}, ${consultData.patient?.firstName}`}
+                onClickPatientName={() => navigate(`/patients/records/${consultData.patient?.id}`)}
             />
         </div>
     );

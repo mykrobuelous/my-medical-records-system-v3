@@ -19,6 +19,7 @@ interface Props {
     onSubmit: (data: ConsultationFormData) => void;
     onDelete?: () => void;
     patientName?: string;
+    onClickPatientName?: () => void;
 }
 
 const ConsultationForm: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const ConsultationForm: React.FC<Props> = ({
     onSubmit,
     patientName,
     onDelete,
+    onClickPatientName,
 }) => {
     const isEditing = !!defaultValues;
     const navigate = useNavigate();
@@ -49,9 +51,13 @@ const ConsultationForm: React.FC<Props> = ({
             onSubmit={handleSubmit(onSubmit)}
         >
             <div className="flex items-end gap-4">
-                <p className="text-xl font-bold">
-                    {patientName ? patientName : 'Add Consultation'}
-                </p>
+                {isEditing ? (
+                    <p className="cursor-pointer text-xl font-bold" onClick={onClickPatientName}>
+                        {patientName}
+                    </p>
+                ) : (
+                    <p className="text-xl font-bold">Add Consultation</p>
+                )}
                 {isEditing && <p>{formatDate(defaultValues.consultationDate)}</p>}
             </div>
             <div className="flex flex-col gap-4 overflow-y-scroll">
