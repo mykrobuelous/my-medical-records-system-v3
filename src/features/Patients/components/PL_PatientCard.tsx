@@ -1,5 +1,5 @@
 // 📦 LIBRARIES IMPORT
-import type { PatientType } from '@/collection/data/data.types';
+import type { PatientWithConsultationsType } from '@/collection/data/data.types';
 import { getAge } from '@/shared/utils/convertDate';
 import { ChevronRight, UserCircle } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge';
 
 interface Props {
     className?: string;
-    patient: PatientType;
+    patient: PatientWithConsultationsType;
     onClick?: () => void;
 }
 
@@ -53,6 +53,13 @@ const PL_PatientCard: React.FC<Props> = ({ className, patient, onClick }) => {
                     </p>
                 </div>
 
+                <div className="flex items-center justify-between gap-4">
+                    <p className="text-sm text-slate-500">Consultations</p>
+
+                    <p className="text-sm font-semibold text-slate-800">
+                        {patient.consultations.length}
+                    </p>
+                </div>
                 <div className="flex items-center justify-between gap-4">
                     <p className="text-sm text-slate-500">Contact Number</p>
 
