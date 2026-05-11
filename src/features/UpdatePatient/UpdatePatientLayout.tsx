@@ -1,6 +1,5 @@
 // 📦 LIBRARIES IMPORT
 import Loading from '@/shared/components/Loading/Loading';
-import PatientForm from '@/shared/components/PatientForm/PatientForm';
 import {
     useGetPatientByIdQuery,
     useUpdatePatientMutation,
@@ -8,8 +7,9 @@ import {
 import type { IDBrand } from '@/shared/types/utilTypes';
 import { useNavigate, useParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
-import type { PatientFormData } from '../AddPatient/schema/patientSchema';
 import { toast } from 'react-hot-toast';
+import type { PatientFormData } from '@/shared/schema/schemas';
+import PatientForm from '@/shared/components/Forms/PatientForm';
 
 /* ===================================================================== */
 /*🧩 UPDATE PATIENT - Update patient form*/

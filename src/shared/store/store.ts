@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit/react';
 import { useDispatch, useSelector, type TypedUseSelectorHook } from 'react-redux';
 import { baseApi } from '../services/baseAPI';
+import patientReducer from './reducers/patientReducer';
 
 const store = configureStore({
     reducer: {
         [baseApi.reducerPath]: baseApi.reducer,
+        patient: patientReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 });

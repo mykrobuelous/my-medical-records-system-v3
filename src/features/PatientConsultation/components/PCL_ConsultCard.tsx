@@ -10,13 +10,16 @@ import { twMerge } from 'tailwind-merge';
 interface Props {
     className?: string;
     consultData: ConsultationType;
+    viewOnly?: boolean;
+    onView?: () => void;
 }
 
-const PCL_ConsultCard: React.FC<Props> = ({ className, consultData }) => {
+const PCL_ConsultCard: React.FC<Props> = ({ className, consultData, viewOnly = true, onView }) => {
     return (
         <div
             className={twMerge(
-                'flex h-100 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md',
+                'flex h-100 shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md',
+                viewOnly ? 'h-100' : 'h-auto',
                 className
             )}
         >
@@ -64,9 +67,11 @@ const PCL_ConsultCard: React.FC<Props> = ({ className, consultData }) => {
                     </p>
                 </div>
             </div>
-            <div className="px-5 py-4">
-                <Button label="View Record" className="text-xs" />
-            </div>
+            {viewOnly && (
+                <div className="px-5 py-4">
+                    <Button label="View Record" className="w-full text-xs" onClick={onView} />
+                </div>
+            )}
         </div>
     );
 };

@@ -1,10 +1,10 @@
 // 📦 LIBRARIES IMPORT
 import { twMerge } from 'tailwind-merge';
-import { type PatientFormData } from './schema/patientSchema';
 import { useCreatePatientMutation } from '@/shared/services/api/patientsAPI';
 import { useNavigate } from 'react-router';
-import PatientForm from '@/shared/components/PatientForm/PatientForm';
 import { toast } from 'react-hot-toast';
+import PatientForm from '@/shared/components/Forms/PatientForm';
+import type { PatientFormData } from '@/shared/schema/schemas';
 
 /* ===================================================================== */
 /*🧩 ADD PATIENT LAYOUT - Where the adding the patients*/
@@ -17,12 +17,11 @@ const AddPatientLayout: React.FC<Props> = ({ className }) => {
     const [createPatient] = useCreatePatientMutation();
     const navigate = useNavigate();
 
-    const onSubmit = (data: PatientFormData) => {
-        const result = createPatient(data);
+    const onSubmit = async (data: PatientFormData) => {
+        const result = await createPatient(data);
 
         if ('error' in result) {
             toast.error('Failed to create patient');
-            console.error('Failed to create patient:', result.error);
             return;
         }
         toast.success('Patient created successfully');

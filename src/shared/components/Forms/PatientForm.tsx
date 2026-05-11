@@ -2,12 +2,12 @@
 import { twMerge } from 'tailwind-merge';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
-import { patientSchema, type PatientFormData } from '@/features/AddPatient/schema/patientSchema';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { PatientType } from '@/collection/data/data.types';
 import { toDateInputValue } from '@/shared/utils/convertDate';
+import { patientSchema, type PatientFormData } from '@/shared/schema/schemas';
 
 /* ===================================================================== */
 /*🧩 PATIENT FORM - Form for the patient*/
@@ -127,6 +127,7 @@ const PatientForm: React.FC<Props> = ({ className, onSubmit, defaultValues }) =>
                 </div>
             </div>
             <div className="flex gap-2">
+                <Button label={isEditing ? 'Update Patient' : 'Add Patient'} type="submit" />
                 <Button
                     label="Cancel"
                     type="button"
@@ -139,7 +140,6 @@ const PatientForm: React.FC<Props> = ({ className, onSubmit, defaultValues }) =>
                         navigate('/patients');
                     }}
                 />
-                <Button label={isEditing ? 'Update Patient' : 'Add Patient'} type="submit" />
             </div>
         </form>
     );

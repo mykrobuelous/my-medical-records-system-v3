@@ -8,16 +8,22 @@ interface Props {
     className?: string;
     handleClose: () => void;
     handleConfirm: () => void;
+    title: string;
+    description: string;
 }
 
-const ConfirmModal: React.FC<Props> = ({ className, handleClose, handleConfirm }) => {
+const ConfirmModal: React.FC<Props> = ({
+    className,
+    handleClose,
+    handleConfirm,
+    title,
+    description,
+}) => {
     return (
         <div className={twMerge('w-full max-w-md rounded-2xl bg-white p-6 shadow-xl', className)}>
-            <h2 className="text-xl font-semibold text-gray-900">Delete Patient</h2>
+            <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
 
-            <p className="mt-3 text-sm leading-relaxed text-gray-600">
-                Are you sure you want to delete this patient
-            </p>
+            <p className="mt-3 text-sm leading-relaxed text-gray-600">{description}</p>
 
             <div className="mt-6 flex justify-end gap-3">
                 <button

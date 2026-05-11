@@ -6,20 +6,20 @@ import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import AC_PatientItem from '../components/AC_PatientItem';
-import type { PatientWithConsultationsType } from '@/collection/data/data.types';
+import useSelectedPatient from '@/shared/hooks/useSelectedPatient';
 
 /* ===================================================================== */
 /*🧩 SELECT PATIENT MODAL - Selecting a patient*/
 
 interface Props {
     className?: string;
-    handleSetPatient: (patient: PatientWithConsultationsType) => void;
     closeModal: () => void;
 }
 
-const AC_SelectPatientModal: React.FC<Props> = ({ className, handleSetPatient, closeModal }) => {
+const AC_SelectPatientModal: React.FC<Props> = ({ className, closeModal }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const { data: patientsData } = useGetPatientsQuery();
+    const { setSelectedPatient } = useSelectedPatient();
 
     if (!patientsData) return <Loading />;
 
@@ -60,7 +60,7 @@ const AC_SelectPatientModal: React.FC<Props> = ({ className, handleSetPatient, c
                                 key={patientItem.id}
                                 patient={patientItem}
                                 onClick={() => {
-                                    handleSetPatient(patientItem);
+                                    setSelectedPatient(patientItem);
                                     closeModal();
                                 }}
                             />

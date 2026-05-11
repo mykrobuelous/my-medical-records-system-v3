@@ -9,6 +9,7 @@ import AddPatientLayout from '@/features/AddPatient/AddPatientLayout';
 import PatientLayout from '@/features/Patient/PatientLayout';
 import UpdatePatientLayout from '@/features/UpdatePatient/UpdatePatientLayout';
 import AddConsultationLayout from '@/features/AddConsultation/AddConsultationLayout';
+import ConsultationLayout from '@/features/Consultation/ConsultationLayout';
 
 const AppLayout = () => {
     return (
@@ -22,6 +23,7 @@ const AppLayout = () => {
                     <Route path="/patients/update/:id" element={<UpdatePatientLayout />} />
                     <Route path="/consultations" element={<ConsultationsLayout />} />
                     <Route path="/consultations/add" element={<AddConsultationLayout />} />
+                    <Route path="/consultations/:id" element={<ConsultationLayout />} />
                     <Route path="*" element={<Navigate to="/patients" replace />} />
                 </Route>
             </Routes>

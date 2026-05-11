@@ -9,9 +9,10 @@ import { twMerge } from 'tailwind-merge';
 interface Props {
     className?: string;
     consultation: ConsultationWithPatientType;
+    onClick?: () => void;
 }
 
-const C_ConsultationItem: React.FC<Props> = ({ className, consultation }) => {
+const C_ConsultationItem: React.FC<Props> = ({ className, consultation, onClick }) => {
     const { consultation: consult, patient } = consultation;
     return (
         <div
@@ -19,6 +20,7 @@ const C_ConsultationItem: React.FC<Props> = ({ className, consultation }) => {
                 'group cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-200 hover:border-blue-200 hover:shadow-md',
                 className
             )}
+            onClick={onClick}
         >
             {/* Header */}
             <div className="flex items-start justify-between gap-4">

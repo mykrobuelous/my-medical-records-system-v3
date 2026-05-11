@@ -1,5 +1,5 @@
 // 📦 LIBRARIES IMPORT
-import type { PatientType } from '@/collection/data/data.types';
+import type { PatientWithConsultationsType } from '@/collection/data/data.types';
 import { twMerge } from 'tailwind-merge';
 import PTL_DataLabel from '../components/PTL_DataLabel';
 import { formatDate, getAge } from '@/shared/utils/convertDate';
@@ -9,19 +9,21 @@ import { useModal } from '@/shared/context/ModalContext/useModal';
 import ConfirmModal from '@/shared/components/Modal/ConfirmModal';
 import { useDeletePatientMutation } from '@/shared/services/api/patientsAPI';
 import { toast } from 'react-hot-toast';
+import useSelectedPatient from '@/shared/hooks/useSelectedPatient';
 
 /* ===================================================================== */
 /*🧩 PATIENT RECORDS - Contains the records of the patients*/
 
 interface Props {
     className?: string;
-    patient: PatientType;
+    patient: PatientWithConsultationsType;
 }
 
 const PTL_Records: React.FC<Props> = ({ className, patient }) => {
     const navigate = useNavigate();
     const { openModal, closeModal } = useModal();
     const [deletePatient] = useDeletePatientMutation();
+    const { setSelectedPatient } = useSelectedPatient();
 
     const handleDelete = async () => {
         const result = deletePatient(patient.id);
@@ -74,11 +76,23 @@ const PTL_Records: React.FC<Props> = ({ className, patient }) => {
                     onClick={() => navigate(`/patients/update/${patient.id}`)}
                 />
                 <Button
+                    label="Patient Consultation"
+                    onClick={() => {
+                        setSelectedPatient(patient);
+                        navigate(`/consultations/add`);
+                    }}
+                />
+                <Button
                     label="Delete Patient"
                     className="bg-red-600 hover:bg-red-500"
                     onClick={() =>
                         openModal(
-                            <ConfirmModal handleClose={closeModal} handleConfirm={handleDelete} />
+                            <ConfirmModal
+                                handleClose={closeModal}
+                                handleConfirm={handleDelete}
+                                title="Delete Patient"
+                                description="Do you want to delete this patient. This action cannot be reversed."
+                            />
                         )
                     }
                 />

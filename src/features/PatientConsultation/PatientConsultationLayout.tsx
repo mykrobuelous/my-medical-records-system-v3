@@ -3,6 +3,7 @@ import Loading from '@/shared/components/Loading/Loading';
 import { twMerge } from 'tailwind-merge';
 import PCL_ConsultCard from './components/PCL_ConsultCard';
 import type { ConsultationType } from '@/collection/data/data.types';
+import { useNavigate } from 'react-router';
 
 /* ===================================================================== */
 /*🧩 PATIENT CONSULTATION LAYOUT - The layout for viewing consultations of patients*/
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const PatientConsultationLayout: React.FC<Props> = ({ className, consultData }) => {
+    const navigate = useNavigate();
     if (!consultData) return <Loading />;
 
     return (
@@ -24,7 +26,11 @@ const PatientConsultationLayout: React.FC<Props> = ({ className, consultData }) 
             )}
         >
             {consultData.map((consultItem) => (
-                <PCL_ConsultCard key={consultItem.id} consultData={consultItem} />
+                <PCL_ConsultCard
+                    key={consultItem.id}
+                    consultData={consultItem}
+                    onView={() => navigate(`/consultations/${consultItem.id}`)}
+                />
             ))}
         </div>
     );

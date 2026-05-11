@@ -1,7 +1,7 @@
 import type { PatientType, PatientWithConsultationsType } from '@/collection/data/data.types';
 import { baseApi } from '../baseAPI';
-import type { PatientFormData } from '@/features/AddPatient/schema/patientSchema';
 import type { IDBrand } from '@/shared/types/utilTypes';
+import type { PatientFormData } from '@/shared/schema/schemas';
 
 const patientsAPI = baseApi.injectEndpoints({
     endpoints: (build) => ({
