@@ -30,20 +30,23 @@ const PL_PatientList: React.FC<Props> = ({ className, searchTerm }) => {
     if (!patientsData) return <Loading />;
 
     return (
-        <div
-            className={twMerge(
-                'grid flex-1 grid-cols-3 flex-col content-start gap-2 overflow-y-scroll',
-                className
-            )}
-        >
-            {filteredPatients.map((patientItem) => (
-                <PL_PatientCard
-                    key={patientItem.id}
-                    patient={patientItem}
-                    className="h-fit"
-                    onClick={() => navigate(`/patients/records/${patientItem.id}`)}
-                />
-            ))}
+        <div className={twMerge('flex h-full flex-col gap-2 overflow-hidden', className)}>
+            <div className="flex items-center gap-2 px-5">
+                <p className="w-100 text-xl font-bold">Patient Name</p>
+                <p className="w-50 text-xl font-bold">Gender</p>
+                <p className="w-80 text-xl font-bold">Age</p>
+                <p className="text-xl font-bold">Last Consult</p>
+            </div>
+            <div className={twMerge('flex flex-col gap-2 overflow-y-scroll')}>
+                {filteredPatients.map((patientItem) => (
+                    <PL_PatientCard
+                        key={patientItem.id}
+                        patient={patientItem}
+                        className="h-fit"
+                        onClick={() => navigate(`/patients/records/${patientItem.id}`)}
+                    />
+                ))}
+            </div>
         </div>
     );
 };

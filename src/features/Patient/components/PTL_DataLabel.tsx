@@ -13,9 +13,11 @@ interface Props {
 const PTL_DataLabel: React.FC<Props> = ({ className, label, value }) => {
     return (
         <div className={twMerge('flex flex-col gap-1', className)}>
-            <p className="text-xs font-semibold tracking-wide text-slate-700">{label}</p>
+            <p className="text-lg font-semibold tracking-wide text-slate-700 uppercase underline">
+                {label}
+            </p>
 
-            <p className="text-base font-medium text-slate-600">{value || '—'}</p>
+            <p className="text-2xl font-medium text-slate-600">{value || '—'}</p>
         </div>
     );
 };

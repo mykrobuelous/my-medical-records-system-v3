@@ -32,7 +32,7 @@ const AC_SelectPatientModal: React.FC<Props> = ({ className, closeModal }) => {
     return (
         <div
             className={twMerge(
-                'flex h-120 w-125 flex-col overflow-hidden rounded-3xl bg-white',
+                'flex h-150 w-125 flex-col overflow-hidden rounded-3xl bg-white shadow-xl',
                 className
             )}
         >

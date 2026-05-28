@@ -1,7 +1,7 @@
 // 📦 LIBRARIES IMPORT
 import { twMerge } from 'tailwind-merge';
 import NB_NavItem from '../components/NB_NavItem';
-import { ScanHeart, User } from 'lucide-react';
+import { HeartHandshake, ScanHeart, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
 
 /* ===================================================================== */
@@ -28,6 +28,12 @@ const NB_Navlist: React.FC<Props> = ({ className }) => {
                 Icon={ScanHeart}
                 onClick={() => navigate('/consultations')}
                 selected={pathname.includes('/consultations')}
+            />
+            <NB_NavItem
+                label="Insurance"
+                Icon={HeartHandshake}
+                onClick={() => navigate('/insurance')}
+                selected={pathname.includes('/insurance')}
             />
         </div>
     );

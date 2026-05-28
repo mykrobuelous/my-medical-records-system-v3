@@ -18,13 +18,7 @@ const PatientConsultationLayout: React.FC<Props> = ({ className, consultData }) 
     if (!consultData) return <Loading />;
 
     return (
-        <div
-            className={twMerge(
-                'grid flex-1 grid-cols-3 content-start gap-2',
-                'overflow-y-scroll',
-                className
-            )}
-        >
+        <div className={twMerge('flex flex-1 flex-col gap-4', 'overflow-y-scroll', className)}>
             {consultData.map((consultItem) => (
                 <PCL_ConsultCard
                     key={consultItem.id}

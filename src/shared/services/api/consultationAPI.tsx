@@ -1,4 +1,8 @@
-import type { ConsultationType, ConsultationWithPatientType } from '@/collection/data/data.types';
+import type {
+    ConsultationType,
+    ConsultationWithInsuranceType,
+    ConsultationWithPatientType,
+} from '@/collection/data/data.types';
 import { baseApi } from '../baseAPI';
 import type { IDBrand } from '@/shared/types/utilTypes';
 import type { ConsultationCompleteData } from '@/shared/schema/schemas';
@@ -13,8 +17,12 @@ const consultationsAPI = baseApi.injectEndpoints({
             query: (id) => `/consultations/${id}`,
             providesTags: (_result, _error, id) => [{ type: 'Consultations', id }],
         }),
-        getConsultationsByPatientId: build.query<ConsultationType[], IDBrand>({
+        getConsultationsByPatientId: build.query<ConsultationWithPatientType[], IDBrand>({
             query: (id) => `/consultations/patient/${id}`,
+            providesTags: ['Consultations'],
+        }),
+        getConsultationsByInsuranceId: build.query<ConsultationWithInsuranceType, IDBrand>({
+            query: (id) => `/consultations/insurance/${id}`,
             providesTags: ['Consultations'],
         }),
         createConsultation: build.mutation<ConsultationType, ConsultationCompleteData>({
@@ -23,7 +31,7 @@ const consultationsAPI = baseApi.injectEndpoints({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags: ['Consultations'],
+            invalidatesTags: ['Consultations', 'Insurances'],
         }),
         updateConsultation: build.mutation<
             ConsultationType,
@@ -37,6 +45,7 @@ const consultationsAPI = baseApi.injectEndpoints({
             invalidatesTags: (_result, _error, { id }) => [
                 { type: 'Consultations', id },
                 'Consultations',
+                'Insurances',
             ],
         }),
         deleteConsultation: build.mutation<ConsultationType, IDBrand>({
@@ -47,6 +56,7 @@ const consultationsAPI = baseApi.injectEndpoints({
             invalidatesTags: (_result, _error, id) => [
                 { type: 'Consultations', id },
                 'Consultations',
+                'Insurances',
             ],
         }),
     }),
@@ -59,4 +69,5 @@ export const {
     useGetConsultationByIdQuery,
     useUpdateConsultationMutation,
     useDeleteConsultationMutation,
+    useGetConsultationsByInsuranceIdQuery,
 } = consultationsAPI;

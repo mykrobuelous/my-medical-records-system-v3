@@ -9,13 +9,14 @@ import { twMerge } from 'tailwind-merge';
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     className?: string;
     containerTWName?: string;
+    marginTWName?: string;
     label?: string;
     Icon?: LucideIcon;
     error?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
-    ({ className, containerTWName, label, Icon, error = false, ...props }, ref) => {
+    ({ className, containerTWName, marginTWName, label, Icon, error = false, ...props }, ref) => {
         return (
             <div className={twMerge('flex flex-col gap-1', containerTWName)}>
                 <div className="flex items-center justify-between">
@@ -26,14 +27,15 @@ const Input = forwardRef<HTMLInputElement, Props>(
                     className={twMerge(
                         'flex items-center gap-2 py-2',
                         'rounded-lg border border-slate-400',
-                        Icon ? 'px-2' : 'px-4'
+                        Icon ? 'px-2' : 'px-4',
+                        marginTWName
                     )}
                 >
                     {Icon && <Icon className="h-5.5 w-5.5 text-slate-400" />}
                     <input
                         ref={ref}
                         type="text"
-                        className={twMerge('w-full', 'outline-none', className)}
+                        className={twMerge('w-full text-2xl', 'outline-none', className)}
                         {...props}
                     />
                 </div>

@@ -45,7 +45,6 @@ const UpdatePatientLayout: React.FC<Props> = ({ className }) => {
         <div className={twMerge('flex flex-col gap-4', 'px-10 py-8', className)}>
             <div>
                 <p className="text-3xl font-bold">Update Patient</p>
-                <p>Update Patient Data</p>
             </div>
             <PatientForm defaultValues={patientData} onSubmit={onSubmit} />
         </div>

@@ -24,10 +24,9 @@ const AC_PatientItem: React.FC<Props> = ({ className, patient, onClick }) => {
             onClick={onClick}
         >
             <div className="flex flex-col items-start">
-                <p className="text-sm font-semibold text-slate-800">
+                <p className="text-2xl text-slate-800">
                     {`${patient.lastName}, ${patient.firstName}`}
                 </p>
-                <p className="mt-1 text-xs text-slate-400">Patient Record</p>
             </div>
         </div>
     );

@@ -17,7 +17,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, Props>(
         return (
             <div className={twMerge('flex flex-col gap-1', containerTWName)}>
                 <div className="flex items-center justify-between">
-                    {label && <label className="block text-sm font-medium">{label}</label>}
+                    {label && <label className="block text-lg font-medium">{label}</label>}
                     {error && <p className="text-sm text-red-500">Required</p>}
                 </div>
                 <div
@@ -28,7 +28,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, Props>(
                 >
                     <textarea
                         ref={ref}
-                        className={twMerge('w-full', 'outline-none', className)}
+                        className={twMerge('w-full text-2xl', 'outline-none', className)}
                         {...props}
                     />
                 </div>

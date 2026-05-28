@@ -6,9 +6,13 @@ import useSelectedPatient from '@/shared/hooks/useSelectedPatient';
 import { consultationFormSchema, type ConsultationFormData } from '@/shared/schema/schemas';
 import { formatDate } from '@/shared/utils/convertDate';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { twMerge } from 'tailwind-merge';
+import Input from '../Input/Input';
+import Select from '../Input/Select';
+import { useGetInsurancesQuery } from '@/shared/services/api/insuranceAPI';
+import Loading from '../Loading/Loading';
 
 /* ===================================================================== */
 /*🧩 CONSULTATION FORM - Consultation form for adding new consultation */
@@ -33,14 +37,21 @@ const ConsultationForm: React.FC<Props> = ({
     const isEditing = !!defaultValues;
     const navigate = useNavigate();
     const { setSelectedPatient } = useSelectedPatient();
+    const { data: insureData } = useGetInsurancesQuery();
     const {
         register,
         handleSubmit,
         formState: { errors },
+        control,
     } = useForm({
         resolver: zodResolver(consultationFormSchema),
-        defaultValues,
+        defaultValues: {
+            ...defaultValues,
+            insuranceId: defaultValues?.insuranceId ?? '',
+        },
     });
+
+    if (!insureData) return <Loading />;
 
     return (
         <form
@@ -56,11 +67,29 @@ const ConsultationForm: React.FC<Props> = ({
                         {patientName}
                     </p>
                 ) : (
-                    <p className="text-xl font-bold">Add Consultation</p>
+                    <p className="text-4xl font-bold">Add Consultation</p>
                 )}
-                {isEditing && <p>{formatDate(defaultValues.consultationDate)}</p>}
+                {isEditing && (
+                    <p className="text-xl font-bold">
+                        {formatDate(defaultValues.consultationDate)}
+                    </p>
+                )}
             </div>
             <div className="flex flex-col gap-4 overflow-y-scroll">
+                <div className="flex gap-4">
+                    <Input
+                        label="Height (cm)"
+                        type="number"
+                        {...register('height')}
+                        error={!!errors.height?.message}
+                    />
+                    <Input
+                        label="Weight (kg)"
+                        type="number"
+                        {...register('weight')}
+                        error={!!errors.weight?.message}
+                    />
+                </div>
                 <Textarea
                     className="resize-none"
                     label="Chief Complaint"
@@ -101,6 +130,30 @@ const ConsultationForm: React.FC<Props> = ({
                     {...register('plan')}
                     error={!!errors.plan?.message}
                 />
+                <div className="flex gap-4">
+                    <Controller
+                        control={control}
+                        name="insuranceId"
+                        render={({ field }) => (
+                            <Select
+                                label="Insurance"
+                                marginTWName="h-full"
+                                onChange={field.onChange}
+                                value={field.value}
+                                options={insureData.map((insItem) => ({
+                                    label: insItem.name,
+                                    value: insItem.id ?? '',
+                                }))}
+                            />
+                        )}
+                    />
+                    <Input
+                        label="Amount (₱)"
+                        type="number"
+                        {...register('insuranceAmount')}
+                        error={!!errors.insuranceAmount?.message}
+                    />
+                </div>
             </div>
             <div className="flex gap-4">
                 <Button

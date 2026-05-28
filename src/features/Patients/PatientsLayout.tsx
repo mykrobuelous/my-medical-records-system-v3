@@ -27,8 +27,7 @@ const PatientsLayout: React.FC<Props> = ({ className }) => {
             )}
         >
             <div>
-                <p className="text-3xl font-bold">Patients</p>
-                <p>List of patients in the records</p>
+                <p className="text-4xl font-bold">Patients</p>
             </div>
             <Input
                 containerTWName="w-90"

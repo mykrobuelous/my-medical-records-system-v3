@@ -28,8 +28,26 @@ export type ConsultationType = {
     objective: string;
     assessment: string;
     plan: string;
+    height: number; // cm
+    weight: number; // kg
+    insuranceId: string;
+    insuranceAmount?: number; // ₱
     createdAt: Date;
     updatedAt: Date;
+};
+
+export type InsuranceType = {
+    id: string | null;
+    name: string;
+};
+
+export type InsuranceWithTotalType = InsuranceType & {
+    totalAmount: number;
+};
+
+export type ConsultationWithInsuranceType = {
+    consultations: ConsultationWithPatientType[];
+    insurances: InsuranceType | null;
 };
 
 export type ConsultationWithPatientType = {

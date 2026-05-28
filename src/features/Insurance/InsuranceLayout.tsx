@@ -1,44 +1,37 @@
 // 📦 LIBRARIES IMPORT
 import { twMerge } from 'tailwind-merge';
-import C_ConsultList from './containers/C_ConsultList';
+import IN_InsuranceList from './containers/IN_InsuranceList';
 import Button from '@/shared/components/Button/Button';
-import { useNavigate } from 'react-router';
 import Input from '@/shared/components/Input/Input';
 import { useState } from 'react';
-import { useGetConsultationsQuery } from '@/shared/services/api/consultationAPI';
-import Loading from '@/shared/components/Loading/Loading';
-import { getObjectsBetweenDates } from '@/shared/utils/convertDate';
+import { useModal } from '@/shared/context/ModalContext/useModal';
+import IN_AddInsureModal from './modals/IN_AddInsureModal';
+import { useGetInsurancesQuery } from '@/shared/services/api/insuranceAPI';
 
 /* ===================================================================== */
-/*🧩 CONSULTATIONS LAYOUT - Where the list of consultations go*/
+/*🧩 INSURANCE LAYOUT - Insurance layout */
 
 interface Props {
     className?: string;
 }
 
-const ConsultationsLayout: React.FC<Props> = ({ className }) => {
+const InsuranceLayout: React.FC<Props> = ({ className }) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [allChecked, setAllChecked] = useState(true);
-    const navigate = useNavigate();
-    const { data: consultData } = useGetConsultationsQuery();
-
-    if (!consultData) return <Loading />;
-
-    const filteredConsults = getObjectsBetweenDates(
-        startDate,
-        endDate,
-        consultData.map((consultItem) => ({
-            ...consultItem,
-            date: consultItem.consultation.consultationDate,
-        })),
-        'date'
+    const { data: insureData } = useGetInsurancesQuery(
+        allChecked ? undefined : { startDate, endDate }
     );
+
+    const { openModal, closeModal } = useModal();
+    const totalAmount =
+        insureData?.reduce((sum, insureItem) => sum + (insureItem.totalAmount || 0), 0) ?? 0;
 
     return (
         <div className={twMerge('flex flex-1 flex-col gap-4 px-10 py-8', className)}>
-            <div>
-                <p className="text-4xl font-bold">Consultations</p>
+            <div className="flex items-end gap-10">
+                <p className="text-4xl font-bold">Insurance</p>
+                <p className="text-lg font-bold">Total: Php {totalAmount}</p>
             </div>
             <div className="flex gap-4">
                 <Input
@@ -61,12 +54,15 @@ const ConsultationsLayout: React.FC<Props> = ({ className }) => {
                     value={endDate}
                 />
             </div>
-            <C_ConsultList consultData={allChecked ? consultData : filteredConsults} />
+            <IN_InsuranceList insureData={insureData} />
             <div>
-                <Button label="Consultation" onClick={() => navigate('/consultations/add')} />
+                <Button
+                    label="Add Insurance"
+                    onClick={() => openModal(<IN_AddInsureModal onClose={closeModal} />)}
+                />
             </div>
         </div>
     );
 };
 
-export default ConsultationsLayout;
+export default InsuranceLayout;
