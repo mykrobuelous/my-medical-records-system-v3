@@ -47,6 +47,11 @@ export type MedicineType = {
     genericName: string;
 };
 
+export type DiagnosisType = {
+    id: string;
+    name: string;
+};
+
 export type InsuranceWithTotalType = InsuranceType & {
     totalAmount: number;
 };

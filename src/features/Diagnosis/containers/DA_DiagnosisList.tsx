@@ -1,29 +1,27 @@
 // 📦 LIBRARIES IMPORT
-import type { MedicineType } from '@/collection/data/data.types';
-import Loading from '@/shared/components/Loading/Loading';
 import { twMerge } from 'tailwind-merge';
-import MD_MedItem from '../components/MD_MedItem';
-import { useDeleteMedicineMutation } from '@/shared/services/api/medicineAPI';
-import { toast } from 'react-hot-toast';
+import DA_DiagnosisItem from '../components/DA_DiagnosisItem';
+import type { DiagnosisType } from '@/collection/data/data.types';
 import { useModal } from '@/shared/context/ModalContext/useModal';
 import ConfirmModal from '@/shared/components/Modal/ConfirmModal';
-import MD_UpdateMedicineModal from '../modals/MD_UpdateMedicineModal';
+import { useDeleteDiagnosisMutation } from '@/shared/services/api/diagnosisAPI';
+import { toast } from 'react-hot-toast';
+import DA_UpdateDiagnosisModal from './DA_UpdateDiagnosisModal';
 
 /* ===================================================================== */
-/*🧩 MEDICINE LIST - List of medicines */
+/*🧩 DIAGNOSIS LIST - List of diagnosis */
 
 interface Props {
     className?: string;
-    medData: MedicineType[] | undefined;
+    diagnosisData: DiagnosisType[];
 }
 
-const MD_MedicineList: React.FC<Props> = ({ className, medData }) => {
-    const [deleteMedicine] = useDeleteMedicineMutation();
+const DA_DiagnosisList: React.FC<Props> = ({ className, diagnosisData }) => {
     const { openModal, closeModal } = useModal();
-    if (!medData) return <Loading />;
+    const [deleteDiagnosis] = useDeleteDiagnosisMutation();
 
     const onDelete = async (id: string) => {
-        const result = await deleteMedicine(id);
+        const result = await deleteDiagnosis(id);
 
         if ('error' in result) {
             toast.error('Failed to delete medicine');
@@ -31,29 +29,35 @@ const MD_MedicineList: React.FC<Props> = ({ className, medData }) => {
         }
         toast.success('Medicine deleted successfully');
     };
+
     return (
         <div
             className={twMerge('flex w-150 flex-1 flex-col gap-2', 'overflow-y-scroll', className)}
         >
-            {medData.map((medItem) => (
-                <MD_MedItem
-                    medData={medItem}
-                    key={medItem.id}
+            {diagnosisData.map((diagnosisItem) => (
+                <DA_DiagnosisItem
+                    key={diagnosisItem.id}
+                    diagnosis={diagnosisItem}
                     onDelete={() =>
                         openModal(
                             <ConfirmModal
                                 title="Delete Medicine"
-                                description={`Do you want to delete ${medItem.brandName}, ${medItem.genericName}. This action is irreversable`}
+                                description={`Do you want to delete ${diagnosisItem.name}. This action is irreversable`}
                                 handleClose={closeModal}
                                 handleConfirm={() => {
-                                    onDelete(medItem.id);
+                                    onDelete(diagnosisItem.id);
                                     closeModal();
                                 }}
                             />
                         )
                     }
                     onEdit={() =>
-                        openModal(<MD_UpdateMedicineModal onClose={closeModal} medData={medItem} />)
+                        openModal(
+                            <DA_UpdateDiagnosisModal
+                                diagnosisData={diagnosisItem}
+                                onClose={closeModal}
+                            />
+                        )
                     }
                 />
             ))}
@@ -61,4 +65,4 @@ const MD_MedicineList: React.FC<Props> = ({ className, medData }) => {
     );
 };
 
-export default MD_MedicineList;
+export default DA_DiagnosisList;

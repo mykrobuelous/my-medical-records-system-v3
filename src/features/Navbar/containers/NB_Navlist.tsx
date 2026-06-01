@@ -1,7 +1,7 @@
 // 📦 LIBRARIES IMPORT
 import { twMerge } from 'tailwind-merge';
 import NB_NavItem from '../components/NB_NavItem';
-import { HeartHandshake, PillBottle, ScanHeart, User } from 'lucide-react';
+import { Factory, HeartHandshake, PillBottle, ScanHeart, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
 
 /* ===================================================================== */
@@ -40,6 +40,12 @@ const NB_Navlist: React.FC<Props> = ({ className }) => {
                 Icon={PillBottle}
                 onClick={() => navigate('/medicine')}
                 selected={pathname.includes('/medicine')}
+            />
+            <NB_NavItem
+                label="Diagnosis"
+                Icon={Factory}
+                onClick={() => navigate('/diagnosis')}
+                selected={pathname.includes('/diagnosis')}
             />
         </div>
     );

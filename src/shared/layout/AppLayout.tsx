@@ -13,6 +13,7 @@ import ConsultationLayout from '@/features/Consultation/ConsultationLayout';
 import InsuranceLayout from '@/features/Insurance/InsuranceLayout';
 import InsuranceItemLayout from '@/features/InsuranceItem/InsuranceItemLayout';
 import MedicineLayout from '@/features/Medicine/MedicineLayout';
+import DiagnosisLayout from '@/features/Diagnosis/DiagnosisLayout';
 
 const AppLayout = () => {
     return (
@@ -30,6 +31,7 @@ const AppLayout = () => {
                     <Route path="/insurance" element={<InsuranceLayout />} />
                     <Route path="/insurance/:id" element={<InsuranceItemLayout />} />
                     <Route path="/medicine" element={<MedicineLayout />} />
+                    <Route path="/diagnosis" element={<DiagnosisLayout />} />
                     <Route path="*" element={<Navigate to="/patients" replace />} />
                 </Route>
             </Routes>

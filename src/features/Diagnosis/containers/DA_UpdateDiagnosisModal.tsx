@@ -1,8 +1,9 @@
 // 📦 LIBRARIES IMPORT
+import type { DiagnosisType } from '@/collection/data/data.types';
 import Button from '@/shared/components/Button/Button';
 import Input from '@/shared/components/Input/Input';
 import Modal from '@/shared/components/Modal/Modal';
-import { useCreateMedicineMutation } from '@/shared/services/api/medicineAPI';
+import { useUpdateDiagnosisMutation } from '@/shared/services/api/diagnosisAPI';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { twMerge } from 'tailwind-merge';
@@ -13,52 +14,46 @@ import { twMerge } from 'tailwind-merge';
 interface Props {
     className?: string;
     onClose: () => void;
+    diagnosisData: DiagnosisType;
 }
 
-const MD_AddMedicineModal: React.FC<Props> = ({ className, onClose }) => {
-    const [brandName, setBrandName] = useState('');
-    const [genericName, setGenericName] = useState('');
-    const [createMedicine] = useCreateMedicineMutation();
+const DA_UpdateDiagnosisModal: React.FC<Props> = ({ className, onClose, diagnosisData }) => {
+    const [name, setName] = useState(diagnosisData.name);
+    const [updateDiagnosis] = useUpdateDiagnosisMutation();
 
     const onConfirmButton = async () => {
-        if (brandName.trim() === '' || genericName.trim() === '') {
+        if (name.trim() === '') {
             toast.error('Please fill in all fields');
             return;
         }
-        const result = await createMedicine({ brandName, genericName });
+        const result = await updateDiagnosis({ name, id: diagnosisData.id });
 
         if ('error' in result) {
-            toast.error('Failed to add medicine');
+            toast.error('Failed to update diagnosis');
             return;
         }
-        toast.success('Medicine added successfully');
+        toast.success('Diagnosis updated successfully');
 
         onClose();
     };
 
     return (
         <Modal className={twMerge('flex flex-col gap-4', className)}>
-            <h2 className="text-4xl font-semibold text-gray-900">Add Medicine</h2>
+            <h2 className="text-4xl font-semibold text-gray-900">Update Diagnosis</h2>
             <div className="flex flex-col gap-4">
-                <Input
-                    label="Brand Name"
-                    placeholder="Enter brand name..."
-                    value={brandName}
-                    onChange={(e) => setBrandName(e.target.value)}
-                />
                 <Input
                     label="Generic Name"
                     placeholder="Enter generic name..."
-                    value={genericName}
-                    onChange={(e) => setGenericName(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                 />
             </div>
             <div className="flex items-center justify-end gap-4">
                 <Button label="Cancel" className="bg-red-600 hover:bg-red-500" onClick={onClose} />
-                <Button label="Add" onClick={onConfirmButton} />
+                <Button label="Update" onClick={onConfirmButton} />
             </div>
         </Modal>
     );
 };
 
-export default MD_AddMedicineModal;
+export default DA_UpdateDiagnosisModal;

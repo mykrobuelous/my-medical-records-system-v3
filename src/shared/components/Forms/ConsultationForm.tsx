@@ -15,6 +15,7 @@ import { useGetInsurancesQuery } from '@/shared/services/api/insuranceAPI';
 import Loading from '../Loading/Loading';
 import { useModal } from '@/shared/context/ModalContext/useModal';
 import MD_SetMedicineModal from '@/features/Medicine/modals/MD_SetMedicineModal';
+import DA_SetDiagnosisModal from '@/features/Diagnosis/containers/DA_SetDiagnosisModal';
 
 /* ===================================================================== */
 /*🧩 CONSULTATION FORM - Consultation form for adding new consultation */
@@ -128,7 +129,28 @@ const ConsultationForm: React.FC<Props> = ({
                         {...register('assessment')}
                         error={!!errors.assessment?.message}
                     />
-                    <Button label="Diagonosis" className="w-fit text-sm" type="button" />
+                    <div className="flex items-center gap-2">
+                        <Button
+                            label="Add Diagonosis"
+                            className="w-fit text-sm"
+                            type="button"
+                            onClick={() =>
+                                openModal(
+                                    <DA_SetDiagnosisModal
+                                        setValue={setValue}
+                                        onClose={closeModal}
+                                        value={getValues('assessment')}
+                                    />
+                                )
+                            }
+                        />
+                        <Button
+                            label="Clear"
+                            className="w-fit bg-red-600 text-sm hover:bg-red-500"
+                            type="button"
+                            onClick={() => setValue('assessment', '')}
+                        />
+                    </div>
                 </div>
                 <div className="flex flex-col gap-2">
                     <Textarea
@@ -176,6 +198,7 @@ const ConsultationForm: React.FC<Props> = ({
                                     label: insItem.name,
                                     value: insItem.id ?? '',
                                 }))}
+                                containerTWName="flex-1"
                             />
                         )}
                     />

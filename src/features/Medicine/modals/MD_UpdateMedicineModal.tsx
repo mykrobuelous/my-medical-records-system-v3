@@ -22,12 +22,12 @@ const MD_UpdateMedicineModal: React.FC<Props> = ({ className, onClose, medData }
     const [genericName, setGenericName] = useState(medData.genericName);
     const [updateMedicine] = useUpdateMedicineMutation();
 
-    const onConfirmButton = () => {
+    const onConfirmButton = async () => {
         if (brandName.trim() === '' || genericName.trim() === '') {
             toast.error('Please fill in all fields');
             return;
         }
-        const result = updateMedicine({ id: medData.id, data: { brandName, genericName } });
+        const result = await updateMedicine({ id: medData.id, data: { brandName, genericName } });
 
         if ('error' in result) {
             toast.error('Failed to update medicine');
