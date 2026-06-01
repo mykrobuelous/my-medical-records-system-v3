@@ -2,6 +2,7 @@
 import type { InsuranceType } from '@/collection/data/data.types';
 import Button from '@/shared/components/Button/Button';
 import Input from '@/shared/components/Input/Input';
+import Modal from '@/shared/components/Modal/Modal';
 import { useUpdateInsuranceMutation } from '@/shared/services/api/insuranceAPI';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -37,12 +38,7 @@ const II_UpdateInsureModal: React.FC<Props> = ({ className, closeModal, insureDa
     };
 
     return (
-        <div
-            className={twMerge(
-                'flex w-125 flex-col gap-4 overflow-hidden rounded-3xl bg-white p-6 shadow-xl',
-                className
-            )}
-        >
+        <Modal className={twMerge('flex flex-col gap-4', className)}>
             <div>
                 <p className="text-2xl font-bold">Update Insurance</p>
             </div>
@@ -60,7 +56,7 @@ const II_UpdateInsureModal: React.FC<Props> = ({ className, closeModal, insureDa
                 />
                 <Button label="Update" onClick={onConfirmButton} />
             </div>
-        </div>
+        </Modal>
     );
 };
 

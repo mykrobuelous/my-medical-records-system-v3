@@ -13,6 +13,8 @@ import Input from '../Input/Input';
 import Select from '../Input/Select';
 import { useGetInsurancesQuery } from '@/shared/services/api/insuranceAPI';
 import Loading from '../Loading/Loading';
+import { useModal } from '@/shared/context/ModalContext/useModal';
+import MD_SetMedicineModal from '@/features/Medicine/modals/MD_SetMedicineModal';
 
 /* ===================================================================== */
 /*🧩 CONSULTATION FORM - Consultation form for adding new consultation */
@@ -36,12 +38,15 @@ const ConsultationForm: React.FC<Props> = ({
 }) => {
     const isEditing = !!defaultValues;
     const navigate = useNavigate();
+    const { openModal, closeModal } = useModal();
     const { setSelectedPatient } = useSelectedPatient();
     const { data: insureData } = useGetInsurancesQuery();
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
+        getValues,
         control,
     } = useForm({
         resolver: zodResolver(consultationFormSchema),
@@ -114,22 +119,49 @@ const ConsultationForm: React.FC<Props> = ({
                     {...register('objective')}
                     error={!!errors.objective?.message}
                 />
-                <Textarea
-                    className="resize-none"
-                    label="Assessment"
-                    rows={3}
-                    placeholder="Assessment here..."
-                    {...register('assessment')}
-                    error={!!errors.assessment?.message}
-                />
-                <Textarea
-                    className="resize-none"
-                    label="Plan"
-                    rows={3}
-                    placeholder="Plan here..."
-                    {...register('plan')}
-                    error={!!errors.plan?.message}
-                />
+                <div className="flex flex-col gap-2">
+                    <Textarea
+                        className="resize-none"
+                        label="Assessment"
+                        rows={3}
+                        placeholder="Assessment here..."
+                        {...register('assessment')}
+                        error={!!errors.assessment?.message}
+                    />
+                    <Button label="Diagonosis" className="w-fit text-sm" type="button" />
+                </div>
+                <div className="flex flex-col gap-2">
+                    <Textarea
+                        className="resize-none"
+                        label="Plan"
+                        rows={3}
+                        placeholder="Plan here..."
+                        {...register('plan')}
+                        error={!!errors.plan?.message}
+                    />
+                    <div className="flex items-center gap-2">
+                        <Button
+                            label="Add Medicine"
+                            className="w-fit text-sm"
+                            type="button"
+                            onClick={() =>
+                                openModal(
+                                    <MD_SetMedicineModal
+                                        onClose={closeModal}
+                                        setValue={setValue}
+                                        value={getValues('plan')}
+                                    />
+                                )
+                            }
+                        />
+                        <Button
+                            label="Clear"
+                            className="w-fit bg-red-600 text-sm hover:bg-red-500"
+                            type="button"
+                            onClick={() => setValue('plan', '')}
+                        />
+                    </div>
+                </div>
                 <div className="flex gap-4">
                     <Controller
                         control={control}

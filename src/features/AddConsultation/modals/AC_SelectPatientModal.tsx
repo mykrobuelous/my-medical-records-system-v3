@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import AC_PatientItem from '../components/AC_PatientItem';
 import useSelectedPatient from '@/shared/hooks/useSelectedPatient';
+import Modal from '@/shared/components/Modal/Modal';
 
 /* ===================================================================== */
 /*🧩 SELECT PATIENT MODAL - Selecting a patient*/
@@ -30,19 +31,14 @@ const AC_SelectPatientModal: React.FC<Props> = ({ className, closeModal }) => {
     );
 
     return (
-        <div
-            className={twMerge(
-                'flex h-150 w-125 flex-col overflow-hidden rounded-3xl bg-white shadow-xl',
-                className
-            )}
-        >
+        <Modal className={twMerge('flex h-150 flex-col p-0', className)}>
             {/* Header */}
-            <div className="border-b border-slate-200 px-6 py-5">
-                <h2 className="text-xl font-bold text-slate-800">Select Patient</h2>
+            <div className="px-6">
+                <h2 className="py-4 text-3xl font-bold text-slate-800">Select Patient</h2>
             </div>
 
             {/* Search */}
-            <div className="border-b border-slate-100 px-6 py-4">
+            <div className="border-y border-slate-100 px-6 py-4">
                 <Input
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -72,7 +68,7 @@ const AC_SelectPatientModal: React.FC<Props> = ({ className, closeModal }) => {
                     )}
                 </div>
             </div>
-        </div>
+        </Modal>
     );
 };
 

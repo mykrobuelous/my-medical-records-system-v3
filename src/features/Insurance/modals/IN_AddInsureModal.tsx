@@ -1,6 +1,7 @@
 // 📦 LIBRARIES IMPORT
 import Button from '@/shared/components/Button/Button';
 import Input from '@/shared/components/Input/Input';
+import Modal from '@/shared/components/Modal/Modal';
 import { useCreateInsuranceMutation } from '@/shared/services/api/insuranceAPI';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -27,14 +28,9 @@ const IN_AddInsureModal: React.FC<Props> = ({ className, onClose }) => {
         onClose?.();
     };
     return (
-        <div
-            className={twMerge(
-                'flex w-125 flex-col gap-4 overflow-hidden rounded-3xl bg-white p-6 shadow-xl',
-                className
-            )}
-        >
+        <Modal className={twMerge('flex flex-col gap-4', className)}>
             <div>
-                <p className="text-2xl font-bold">Add Insurance</p>
+                <h2 className="text-4xl font-semibold text-gray-900">Add Insurance</h2>
             </div>
             <Input
                 label="Insurance Name"
@@ -46,7 +42,7 @@ const IN_AddInsureModal: React.FC<Props> = ({ className, onClose }) => {
                 <Button label="Cancel" className="bg-red-600 hover:bg-red-500" onClick={onClose} />
                 <Button label="Add" onClick={onConfirmButton} />
             </div>
-        </div>
+        </Modal>
     );
 };
 

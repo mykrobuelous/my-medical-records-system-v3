@@ -5,6 +5,15 @@ export const baseApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3000/api',
     }),
-    tagTypes: ['Consultations', 'Consultation', 'Patients', 'Patient', 'Insurance', 'Insurances'],
+    tagTypes: [
+        'Consultations',
+        'Consultation',
+        'Patients',
+        'Patient',
+        'Insurance',
+        'Insurances',
+        'Medicines',
+        'Medicine',
+    ],
     endpoints: () => ({}),
 });

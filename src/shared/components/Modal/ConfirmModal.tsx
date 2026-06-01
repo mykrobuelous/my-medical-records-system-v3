@@ -1,5 +1,6 @@
 // 📦 LIBRARIES IMPORT
 import { twMerge } from 'tailwind-merge';
+import Modal from './Modal';
 
 /* ===================================================================== */
 /*🧩 CONFIRM MODAL - Create a confirm modal*/
@@ -20,7 +21,7 @@ const ConfirmModal: React.FC<Props> = ({
     description,
 }) => {
     return (
-        <div className={twMerge('w-full max-w-md rounded-2xl bg-white p-6 shadow-xl', className)}>
+        <Modal className={twMerge('flex w-150 flex-col', className)}>
             <h2 className="text-4xl font-semibold text-gray-900">{title}</h2>
 
             <p className="mt-3 text-xl leading-relaxed text-gray-600">{description}</p>
@@ -40,7 +41,7 @@ const ConfirmModal: React.FC<Props> = ({
                     Confirm
                 </button>
             </div>
-        </div>
+        </Modal>
     );
 };
 

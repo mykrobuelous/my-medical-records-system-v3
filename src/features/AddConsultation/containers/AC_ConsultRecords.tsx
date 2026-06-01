@@ -15,7 +15,7 @@ const AC_ConsultRecords: React.FC<Props> = ({ className, consultData }) => {
     return (
         <div className={twMerge('flex flex-1 flex-col gap-4 overflow-y-scroll', className)}>
             {consultData.map((consultItem) => (
-                <PCL_ConsultCard consultData={consultItem} viewOnly={false} />
+                <PCL_ConsultCard key={consultItem.id} consultData={consultItem} viewOnly={false} />
             ))}
         </div>
     );
